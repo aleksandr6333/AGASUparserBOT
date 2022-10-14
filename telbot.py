@@ -17,7 +17,7 @@ class TelBot:
     __version__ = config.VERSION
     __author__ = config.AUTHOR
 
-    def __init__(self, TEACHER_LINK, XPATH):
+    def __init__(self):
         """
         Инициализация бота
         """
@@ -28,9 +28,7 @@ class TelBot:
         # инициализируем оброботчик событий
         self.handler = HandlerMain(self.bot)
 
-        self.teacher_link = TEACHER_LINK
-        self.xpath = XPATH
-        self.start_parser = StartParsing(self.bot, XPATH)
+
 
 
     def start(self):
@@ -48,16 +46,31 @@ class TelBot:
         # служит для запуска бота (работа в режиме нон-стоп)
         self.bot.polling(none_stop=True)
 
-    def start_parser(self):
-        self.start_parser.start_parsing()
 
+
+class Parser:
+    def __init__(self, TEACHER_LINK, XPATH):
+
+        self.teacher_link = TEACHER_LINK
+        self.xpath = XPATH
+        self.parser = StartParsing(self, XPATH)
+
+    def start_parser(self):
+        self.parser.start_parsing()
 
 if __name__ == '__main__':
-    bot = TelBot(TEACHER_LINK, XPATH)
+    parser = Parser(TEACHER_LINK, XPATH)
+    parser.start_parser()
+
+if __name__ == '__main__':
+    #parser = Parser(TEACHER_LINK, XPATH)
+    #parser.start_parser()
+    bot = TelBot()
     bot.run_bot()
-    bot.start_parser()
 
-
+#if __name__ == '__main__':
+#    parser = Parser(TEACHER_LINK, XPATH)
+#    parser.start_parser()
 
 
 #active_frame = FrameSwitcher(TEACHER_LINK, XPATH)
