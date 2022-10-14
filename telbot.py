@@ -5,8 +5,9 @@ from settings import config
 # импортируем главный класс-обработчик бота
 from handlers.handler_main import HandlerMain
 # импортируем классс для запуска браузера и переключения к фрейму с расписанием
+from parserr.start_parsing import StartParsing
 
-
+from settings.config import XPATH, TEACHER_LINK
 
 class TelBot:
     """
@@ -16,7 +17,7 @@ class TelBot:
     __version__ = config.VERSION
     __author__ = config.AUTHOR
 
-    def __init__(self):
+    def __init__(self, TEACHER_LINK, XPATH):
         """
         Инициализация бота
         """
@@ -27,6 +28,9 @@ class TelBot:
         # инициализируем оброботчик событий
         self.handler = HandlerMain(self.bot)
 
+        self.teacher_link = TEACHER_LINK
+        self.xpath = XPATH
+        self.start_parser = StartParsing(self.bot, XPATH)
 
 
     def start(self):
@@ -44,12 +48,14 @@ class TelBot:
         # служит для запуска бота (работа в режиме нон-стоп)
         self.bot.polling(none_stop=True)
 
-
+    def start_parser(self):
+        self.start_parser.start_parsing()
 
 
 if __name__ == '__main__':
-    bot = TelBot()
+    bot = TelBot(TEACHER_LINK, XPATH)
     bot.run_bot()
+    bot.start_parser()
 
 
 
