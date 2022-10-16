@@ -62,6 +62,7 @@ if __name__ == '__main__':
     parser = Parser(TEACHER_LINK, XPATH)
     parser.start_parser()
 
+
 if __name__ == '__main__':
     #parser = Parser(TEACHER_LINK, XPATH)
     #parser.start_parser()
