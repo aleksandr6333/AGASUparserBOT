@@ -18,4 +18,5 @@ class StartParsing:
         get_driver = active_frame.get_start_browser()
         actual_teacher_list = ParserTeachersList(XPATH_NAME_INPUT_FIELD, TEACHERS_LIST_HTML, get_driver)
         actual_teacher_list.get_teacher_list()
-        print ("OKК")
+        return get_driver
+        #print ("OKК")

@@ -6,8 +6,11 @@ class HandlerCommands(Handler):
     """
     Класс обрабатывает входящие команды /start и /help и т.п.
     """
-    def __init__(self, bot):
-        super().__init__(bot)
+    def __init__(self, bot, TEACHERS_LIST_HTML, get_driver):
+        super().__init__(bot, TEACHERS_LIST_HTML, get_driver)
+
+        self.teacher_list = TEACHERS_LIST_HTML
+        self.get_driver = get_driver  # Переменная driver полученная через геттер от класса FrameSwitcher
 
     def pressed_btn_start(self, message):
         """

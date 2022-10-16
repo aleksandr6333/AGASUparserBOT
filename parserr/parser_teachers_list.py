@@ -12,5 +12,6 @@ class ParserTeachersList:
         self.search_for_list_teacher = self.get_driver.find_element(By.XPATH, self.teachers_list_html)
         self.teachers_list = self.search_for_list_teacher.find_element(By.XPATH, self.teachers_list_html)
         self.teachers = self.teachers_list.find_elements(By.TAG_NAME, 'li')
-        self.teacher = [teacher.text for teacher in self.teachers]  # Получаем всех преподавателей списком через генератор списков в этой строке
-        print(self.teacher)
+        self.teacher = {teacher.text for teacher in self.teachers}  # Получаем всех преподавателей списком через генератор списков в этой строке
+        return self.teacher
+       #print(self.teacher)

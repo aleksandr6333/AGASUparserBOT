@@ -7,7 +7,7 @@ from handlers.handler_main import HandlerMain
 # импортируем классс для запуска браузера и переключения к фрейму с расписанием
 from parserr.start_parsing import StartParsing
 
-from settings.config import XPATH, TEACHER_LINK
+from settings.config import XPATH, TEACHER_LINK, TEACHERS_LIST_HTML
 
 class TelBot:
     """
@@ -17,7 +17,9 @@ class TelBot:
     __version__ = config.VERSION
     __author__ = config.AUTHOR
 
-    def __init__(self):
+    def __init__(self, TEACHERS_LIST_HTML, get_driver):
+        self.teacher_list = TEACHERS_LIST_HTML
+        self.get_driver = get_driver  # Переменная driver полученная через геттер от класса FrameSwitcher
         """
         Инициализация бота
         """
@@ -26,7 +28,7 @@ class TelBot:
         # инициализируем бот на основе зарегистрированного токена
         self.bot = TeleBot(self.token)
         # инициализируем оброботчик событий
-        self.handler = HandlerMain(self.bot)
+        self.handler = HandlerMain(self.bot, TEACHERS_LIST_HTML, get_driver)
 
 
 
@@ -56,17 +58,17 @@ class Parser:
         self.parser = StartParsing(self, XPATH)
 
     def start_parser(self):
-        self.parser.start_parsing()
+        driver = self.parser.start_parsing()
+        return driver
+#if __name__ == '__main__':
+#    parser = Parser(TEACHER_LINK, XPATH)
+#    parser.start_parser()
+
 
 if __name__ == '__main__':
     parser = Parser(TEACHER_LINK, XPATH)
-    parser.start_parser()
-
-
-if __name__ == '__main__':
-    #parser = Parser(TEACHER_LINK, XPATH)
-    #parser.start_parser()
-    bot = TelBot()
+    parser = parser.start_parser()
+    bot = TelBot(TEACHERS_LIST_HTML, parser)
     bot.run_bot()
 
 #if __name__ == '__main__':
